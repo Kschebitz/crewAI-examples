@@ -1,35 +1,62 @@
 [tool.poetry]
-name = "stock-analysis-crew"
-version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+name = "crewai"
+version = "0.30.11"
+description = "Cutting-edge framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tackling complex tasks."
+authors = ["Joao Moura <joao@crewai.com>"]
+readme = "README.md"
+packages = [{ include = "crewai", from = "src" }]
+
+[tool.poetry.urls]
+Homepage = "https://crewai.com"
+Documentation = "https://github.com/joaomdmoura/CrewAI/wiki/Index"
+Repository = "https://github.com/joaomdmoura/crewai"
 
 [tool.poetry.dependencies]
-python = ">=3.10.0,<3.12"
-crewai = "^0.11.0"
-unstructured = '==0.10.25'
-pyowm = '3.3.0'
-tools = "^0.1.9"
-wikipedia = "1.4.0"
-yfinance = "0.2.35"
-sec-api = "1.0.17"
-tiktoken = "0.5.2"
-faiss-cpu = "1.7.4"
+python = ">=3.10,<=3.13"
+pydantic = "^2.4.2"
+langchain = "^0.1.10"
+openai = "^1.13.3"
+opentelemetry-api = "^1.22.0"
+opentelemetry-sdk = "^1.22.0"
+opentelemetry-exporter-otlp-proto-http = "^1.22.0"
+instructor = "^0.5.2"
+regex = "^2023.12.25"
+crewai-tools = { version = "^0.2.6", optional = true }
+click = "^8.1.7"
+python-dotenv = "^1.0.0"
+embedchain = "^0.1.98"
+appdirs = "^1.4.4"
+
+[tool.poetry.extras]
+tools = ["crewai-tools"]
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+mypy = "1.10.0"
+autoflake = "^2.2.1"
+pre-commit = "^3.6.0"
+mkdocs = "^1.4.3"
+mkdocstrings = "^0.22.0"
+mkdocstrings-python = "^1.1.2"
+mkdocs-material = { extras = ["imaging"], version = "^9.5.7" }
+mkdocs-material-extensions = "^1.3.1"
+pillow = "^10.2.0"
+cairosvg = "^2.7.1"
+crewai-tools = "^0.2.6"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.0"
+pytest-vcr = "^1.0.2"
 python-dotenv = "1.0.0"
-langchain-community = "0.0.10"
-langchain-core = "0.1.8"
-openai = "1.7.1"
 
-[tool.pyright]
-# https://github.com/microsoft/pyright/blob/main/docs/configuration.md
-useLibraryCodeForTypes = true
-exclude = [".cache"]
+[tool.poetry.scripts]
+crewai = "crewai.cli.cli:crewai"
 
-[tool.ruff]
-# https://beta.ruff.rs/docs/configuration/
-select = ['E', 'W', 'F', 'I', 'B', 'C4', 'ARG', 'SIM']
-ignore = ['W291', 'W292', 'W293']
+[tool.mypy]
+ignore_missing_imports = true
+disable_error_code = 'import-untyped'
+exclude = ["cli/templates/main.py", "cli/templates/crew.py"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
